@@ -4,6 +4,11 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { useUser } from './UserContext';
 import '../css/Table.css';
 
+/**
+ * Componente DashComments per visualizzare e gestire i commenti nel pannello di amministrazione.
+ *
+ * @returns {JSX.Element} Il componente JSX per la gestione dei commenti.
+ */
 const DashComments = () => {
   const { currentUser } = useUser(); // Usa il contesto utente
   const [comments, setComments] = useState([]);
@@ -11,6 +16,9 @@ const DashComments = () => {
   const [showModal, setShowModal] = useState(false);
   const [commentIdToDelete, setCommentIdToDelete] = useState('');
 
+  /**
+   * Effettua il fetch dei commenti all'inizializzazione del componente.
+   */
   useEffect(() => {
     const fetchComments = async () => {
       try {
@@ -31,6 +39,9 @@ const DashComments = () => {
     }
   }, [currentUser]);
 
+  /**
+   * Gestisce la visualizzazione di ulteriori commenti.
+   */
   const handleShowMore = async () => {
     const startIndex = comments.length;
     try {
@@ -49,6 +60,9 @@ const DashComments = () => {
     }
   };
 
+  /**
+   * Gestisce l'eliminazione di un commento.
+   */
   const handleDeleteComment = async () => {
     setShowModal(false);
     try {
@@ -76,7 +90,7 @@ const DashComments = () => {
       <div className='container my-5'>
         {currentUser && currentUser.isAdmin && comments.length > 0 ? (
             <>
-              <Table responsive hover bordered className=' custom-table'>
+              <Table responsive hover bordered className='custom-table'>
                 <thead className='bg-primary text-white'>
                 <tr>
                   <th>Data di aggiornamento</th>
@@ -116,7 +130,7 @@ const DashComments = () => {
                       className='w-100 mt-4'
                       onClick={handleShowMore}
                   >
-                    Show more
+                    Mostra di più
                   </Button>
               )}
             </>
@@ -129,13 +143,13 @@ const DashComments = () => {
           </Modal.Header>
           <Modal.Body className='text-center'>
             <HiOutlineExclamationCircle className='text-danger mb-4' size={48} />
-            <h4 className='mb-4'>Sei sicuro di voler eliminare questo commento</h4>
+            <h4 className='mb-4'>Sei sicuro di voler eliminare questo commento?</h4>
             <div className='d-flex justify-content-center'>
               <Button variant='danger' onClick={handleDeleteComment}>
-                Si, elimina
+                Sì, elimina
               </Button>{" "}
               <Button variant='secondary' onClick={() => setShowModal(false)}>
-                No, cancella
+                No, annulla
               </Button>
             </div>
           </Modal.Body>
@@ -145,4 +159,3 @@ const DashComments = () => {
 }
 
 export default DashComments;
-

@@ -7,18 +7,26 @@ import { app } from '../firebase.js';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useUser } from '../components/UserContext.jsx';
 
+/**
+ * Componente per l'aggiornamento di un post esistente.
+ * Permette all'utente autenticato di modificare il titolo, la categoria, l'immagine (opzionale) e il contenuto del post.
+ * Dopo la modifica, l'utente può salvare il post aggiornato.
+ *
+ * @returns {JSX.Element} Elemento JSX che rappresenta la pagina di aggiornamento del post.
+ */
 const UpdatePost = () => {
   const { currentUser } = useUser();
   const navigate = useNavigate();
   const { postId } = useParams();
 
-  const [file, setFile] = useState(null);
-  const [imageUploadProgress, setImageUploadProgress] = useState(null);
-  const [imageUploadError, setImageUploadError] = useState(null);
-  const [formData, setFormData] = useState({});
-  const [publishError, setPublishError] = useState(null);
+  const [file, setFile] = useState(null); // Stato per gestire il file di immagine da caricare
+  const [imageUploadProgress, setImageUploadProgress] = useState(null); // Progresso di upload dell'immagine
+  const [imageUploadError, setImageUploadError] = useState(null); // Eventuali errori durante l'upload dell'immagine
+  const [formData, setFormData] = useState({}); // Stato per i dati del form del post
+  const [publishError, setPublishError] = useState(null); // Eventuali errori durante il processo di pubblicazione del post
 
   useEffect(() => {
+    // Effettua il fetch dei dati del post da aggiornare
     const fetchPost = async () => {
       try {
         const res = await fetch(`/api/post/getposts?postId=${postId}`);
@@ -42,10 +50,14 @@ const UpdatePost = () => {
     fetchPost();
   }, [postId]);
 
+  /**
+   * Gestisce l'upload dell'immagine selezionata.
+   * Utilizza Firebase Storage per caricare l'immagine e aggiorna lo stato con l'URL di download dell'immagine.
+   */
   const handleImageUpload = async () => {
     try {
       if (!file) {
-        setImageUploadError('Seleziona una immagine da caricare');
+        setImageUploadError('Seleziona un\'immagine da caricare');
         return;
       }
 
@@ -60,7 +72,7 @@ const UpdatePost = () => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setImageUploadProgress(progress.toFixed(0));
       }, (error) => {
-        setImageUploadError('Image upload failed');
+        setImageUploadError('Upload dell\'immagine fallito');
         setImageUploadProgress(null);
       }, () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -71,12 +83,18 @@ const UpdatePost = () => {
       });
 
     } catch (error) {
-      setImageUploadError('Image upload failed');
+      setImageUploadError('Upload dell\'immagine fallito');
       setImageUploadProgress(null);
       console.log(error);
     }
   };
 
+  /**
+   * Gestisce l'invio del form di aggiornamento del post.
+   * Effettua una richiesta PUT al server per aggiornare il post.
+   * Reindirizza l'utente alla pagina del post aggiornato in caso di successo.
+   * @param {React.FormEvent<HTMLFormElement>} e Evento di submit del form.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -101,10 +119,11 @@ const UpdatePost = () => {
       }
 
     } catch (error) {
-      setPublishError('Something went wrong');
+      setPublishError('Qualcosa è andato storto');
     }
   };
 
+  // Rendering del componente
   return (
       <div>
         <div className="jumbotron jumbotron-fluid text-white bg-dark">
@@ -118,6 +137,7 @@ const UpdatePost = () => {
             <div className="col-lg-6 col-md-8">
               {currentUser ? (
                   <Form onSubmit={handleSubmit} className="bg-light p-4 rounded shadow-sm">
+                    {/* Campo di input per il titolo del post */}
                     <Form.Group controlId="title" className="mb-4">
                       <Form.Label>Titolo</Form.Label>
                       <Form.Control
@@ -129,6 +149,7 @@ const UpdatePost = () => {
                       />
                     </Form.Group>
 
+                    {/* Campo di input per la categoria del post */}
                     <Form.Group controlId="category" className="mb-4">
                       <Form.Label>Categorie</Form.Label>
                       <Form.Control as="select" onChange={(e) => setFormData({ ...formData, category: e.target.value })} value={formData.category}>
@@ -141,6 +162,7 @@ const UpdatePost = () => {
                       </Form.Control>
                     </Form.Group>
 
+                    {/* Campo di input per l'upload dell'immagine */}
                     <Form.Group controlId="file" className="mb-4">
                       <Form.Label>Upload Immagine</Form.Label>
                       <Form.Control type="file" accept="image/*" onChange={(e) => setFile(e.target.files[0])} />
@@ -153,10 +175,13 @@ const UpdatePost = () => {
                       </Button>
                     </Form.Group>
 
+                    {/* Visualizzazione dell'errore di upload dell'immagine */}
                     {imageUploadError && <Alert variant="danger">{imageUploadError}</Alert>}
 
+                    {/* Visualizzazione dell'immagine caricata (se presente) */}
                     {formData.image && <img src={formData.image} alt="upload" className="img-fluid mb-3" />}
 
+                    {/* Campo di input per il contenuto del post */}
                     <Form.Group controlId="content" className="mb-4">
                       <Form.Label>Contenuto</Form.Label>
                       <ReactQuill
@@ -168,10 +193,13 @@ const UpdatePost = () => {
                           style={{ height: '300px' }}
                       />
                     </Form.Group>
+
+                    {/* Pulsante di submit per l'aggiornamento del post */}
                     <Button type="submit" variant="primary" className="w-100 mt-4">
                       Aggiorna
                     </Button>
 
+                    {/* Visualizzazione dell'errore durante il processo di aggiornamento */}
                     {publishError && <Alert className="mt-3" variant="danger">{publishError}</Alert>}
                   </Form>
               ) : (
@@ -185,4 +213,3 @@ const UpdatePost = () => {
 };
 
 export default UpdatePost;
-

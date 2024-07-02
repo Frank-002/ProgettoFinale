@@ -5,6 +5,11 @@ import { FaCheck, FaTimes } from "react-icons/fa";
 import { useUser } from './UserContext'; // Importa il contesto utente
 import '../css/Table.css'; // Importa il file CSS personalizzato per le modifiche di stile
 
+/**
+ * Componente DashUsers per la gestione degli utenti nel dashboard.
+ *
+ * @returns {JSX.Element} Il componente JSX per la gestione degli utenti.
+ */
 const DashUsers = () => {
   const { currentUser } = useUser(); // Usa il contesto utente
   const [users, setUsers] = useState([]);
@@ -13,6 +18,9 @@ const DashUsers = () => {
   const [userIdToDelete, setUserIdToDelete] = useState("");
 
   useEffect(() => {
+    /**
+     * Funzione per ottenere gli utenti dal server.
+     */
     const fetchUsers = async () => {
       try {
         const res = await fetch(`/api/user/getusers`);
@@ -34,6 +42,9 @@ const DashUsers = () => {
     }
   }, [currentUser._id]);
 
+  /**
+   * Funzione per gestire il caricamento di più utenti.
+   */
   const handleShowMore = async () => {
     const startIndex = users.length;
     try {
@@ -53,6 +64,9 @@ const DashUsers = () => {
     }
   };
 
+  /**
+   * Funzione per gestire l'eliminazione di un utente.
+   */
   const handleDeleteUser = async () => {
     try {
       const res = await fetch(`/api/user/delete/${userIdToDelete}`, {
@@ -159,4 +173,3 @@ const DashUsers = () => {
 };
 
 export default DashUsers;
-

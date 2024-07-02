@@ -6,3 +6,6 @@
     left: auto !important;
     direction: rtl; /* Imposta la direzione da destra a sinistra */
 }
+.collapse{
+    visibility: visible !important;
+}

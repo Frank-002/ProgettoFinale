@@ -1,6 +1,16 @@
 import { Link } from 'react-router-dom';
 import { BsFacebook, BsInstagram, BsTwitter } from 'react-icons/bs';
 
+/**
+ * @Module Footer
+ */
+/**
+
+/**
+ * Componente FooterCom per il footer del sito.
+ *
+ * @returns {JSX.Element} Il componente JSX per il footer del sito.
+ */
 export default function FooterCom() {
   return (
       <footer className="bg-white text-dark pt-5 mt-4 border-top ">
@@ -67,5 +77,3 @@ export default function FooterCom() {
       </footer>
   );
 }
-
-

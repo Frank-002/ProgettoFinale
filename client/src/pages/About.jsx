@@ -1,37 +1,79 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
+import {Col, Container, Row} from "react-bootstrap";
 
+import Image1 from '../public/Imm12.jpeg';
+import Image2 from '../public/imm2.jpeg';
+import Image3 from '../public/imm31.jpeg';
+/**
+ * @Module About
+ */
+/**
+
+/**
+ * Componente per la pagina "Chi siamo?" che fornisce informazioni sulla comunità.
+ *
+ * @returns {JSX.Element} Elemento JSX che rappresenta la pagina "Chi siamo?".
+ */
 export default function About() {
   return (
-    <div>
-      <div className='jumbotron jumbotron-fluid text-white bg-dark'>
-        <div className='container text-center'>
-          <h1 className='display-4'>Chi siamo?</h1>
-          <p className='lead'>
-            Siamo un gruppo appassionato di studenti che si impegna a condividere conoscenze, esperienze e risorse con la nostra comunità di lettori.
-            Qui troverai articoli informativi, guide pratiche e approfondimenti.
-          </p>
-        </div>
-      </div>
+      <div>
+        {/* Jumbotron con informazioni principali */}
+        <div className='jumbotron jumbotron-fluid text-white bg-dark'>
+          <div className='container text-center'>
+            <h1 className='display-4'>Chi siamo?</h1>
+            <p className='lead'>
+              Siamo un gruppo appassionato di studenti che si impegna a condividere conoscenze, esperienze e risorse con la nostra comunità di lettori.
 
-      <div className='container my-5'>
-        <div className='row justify-content-center'>
-          <div className='col-12 col-md-10 col-lg-8'>
-            <h2 className='text-center mb-4'>Unisciti alla nostra community</h2>
-            <div className='text-muted'>
-              <p>
-                Se sei curioso, desideroso di imparare e desideri essere parte di una comunità che valorizza la conoscenza e l'interazione, sei nel posto giusto.
-                Insieme possiamo esplorare nuove idee, risolvere problemi e ispirarci a vicenda.
-              </p>
-              <p>
-                Potrai commentare e mettere mi piace a tutti i post che vorrai, però abbiamo bisogno prima che ti unisca alla nostra community andando a registrarti.
-              </p>
-              <p>
-                Una volta fatto questo, farai parte della famiglia! Quindi cosa aspetti? Unisciti a noi!
-              </p>
-            </div>
+            </p>
           </div>
         </div>
+
+        {/* Contenuto principale della pagina */}
+        <Container className="my-5">
+          <div>
+            {/* Griglia di articoli statici */}
+            <Row className="justify-content-center">
+              {/* Prima Card */}
+              <Col xs={12} md={6} lg={4} className="mb-4">
+                <div className="post-card position-relative border border-teal-500 overflow-hidden rounded-lg transition-all">
+                  <div className="post-image">
+                    <img src={Image1} alt="Immagine predefinita 1" className="post-image w-100 object-cover transition-all duration-300" />
+                  </div>
+                  <div className="p-3 d-flex flex-column gap-2">
+                    <h3 className="text-lg font-weight-semibold text-truncate">Girolamo Impagnatiello</h3>
+                    <span className="font-italic text-sm">Studente di Ingegneria Informatica presso il Politecnico di Bari</span>
+                  </div>
+                </div>
+              </Col>
+
+              {/* Seconda Card */}
+              <Col xs={12} md={6} lg={4} className="mb-4">
+                <div className="post-card position-relative border border-teal-500 overflow-hidden rounded-lg transition-all">
+                  <div className="post-image">
+                    <img src={Image2} alt="Immagine predefinita 1" className="post-image w-100 object-cover transition-all duration-300" />
+                  </div>
+                  <div className="p-3 d-flex flex-column gap-2">
+                    <h3 className="text-lg font-weight-semibold text-truncate">Michelangelo Bratta</h3>
+                    <span className="font-italic text-sm">Studente di Ingegneria Informatica presso il Politecnico di Bari</span>
+                  </div>
+                </div>
+              </Col>
+
+              {/* Terza Cardcd */}
+              <Col xs={12} md={6} lg={4} className="mb-4">
+                <div className="post-card position-relative border border-teal-500 overflow-hidden rounded-lg transition-all">
+                  <div className="post-image">
+                    <img src={Image3} alt="Immagine predefinita 1" className="post-image w-100 object-fit-cover transition-all duration-300" />
+                  </div>
+                  <div className="p-3 d-flex flex-column gap-2">
+                    <h3 className="text-lg font-weight-semibold text-truncate">Francesco Pio Taronna</h3>
+                    <span className="font-italic text-sm">Studente di Ingegneria Informatica presso il Politecnico di Bari</span>
+
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </div>
+        </Container>
       </div>
-    </div>
   );
 }

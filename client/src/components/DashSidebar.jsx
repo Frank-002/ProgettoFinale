@@ -1,11 +1,18 @@
 import { useState, useEffect } from 'react';
-import {Col, Container, Nav, Row} from 'react-bootstrap';
-import {HiUser, HiArrowSmRight, HiDocumentText, HiOutlineUserGroup, HiAnnotation } from 'react-icons/hi';
-import {useLocation, useNavigate } from 'react-router-dom';
+import { Col, Container, Nav, Row } from 'react-bootstrap';
+import { HiUser, HiArrowSmRight, HiDocumentText, HiOutlineUserGroup, HiAnnotation } from 'react-icons/hi';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useUser } from './UserContext';
 
+/**
+ * Componente DashSidebar per la gestione della sidebar del dashboard.
+ *
+ * @param {Object} props - Le proprietà del componente.
+ * @param {function} props.onTabChange - Funzione chiamata quando la scheda cambia.
+ * @returns {JSX.Element} Il componente JSX per la sidebar del dashboard.
+ */
 const DashSidebar = ({ onTabChange }) => {
-    const {currentUser, signOutSuccess} = useUser(); // Usa il contesto dell'utente
+    const { currentUser, signOutSuccess } = useUser(); // Usa il contesto dell'utente
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -19,11 +26,19 @@ const DashSidebar = ({ onTabChange }) => {
         }
     }, [location.search]);
 
+    /**
+     * Gestisce il clic sulla scheda per cambiare la scheda attiva.
+     *
+     * @param {string} newTab - Il nome della nuova scheda.
+     */
     const handleTabClick = (newTab) => {
         setTab(newTab);
         onTabChange(newTab);
     };
 
+    /**
+     * Gestisce il logout dell'utente.
+     */
     const handleSignOut = async () => {
         try {
             const res = await fetch(`/api/user/signout`, {
@@ -55,9 +70,9 @@ const DashSidebar = ({ onTabChange }) => {
                                 active={tab === 'profile'}
                                 onClick={() => handleTabClick('profile')}
                                 className={`d-flex align-items-center justify-content-center justify-content-md-start ${tab === 'profile' ? 'text-primary' : 'text-secondary'}`}
-                                style={{cursor: 'pointer'}}
+                                style={{ cursor: 'pointer' }}
                             >
-                                <HiUser className="me-2"/>
+                                <HiUser className="me-2" />
                                 Profilo {currentUser.isAdmin ? 'Admin' : 'Utente'}
                             </Nav.Link>
                         </Nav.Item>
@@ -68,9 +83,9 @@ const DashSidebar = ({ onTabChange }) => {
                                     active={tab === 'posts'}
                                     onClick={() => handleTabClick('posts')}
                                     className={`d-flex align-items-center justify-content-center justify-content-md-start ${tab === 'posts' ? 'text-primary' : 'text-secondary'}`}
-                                    style={{cursor: 'pointer'}}
+                                    style={{ cursor: 'pointer' }}
                                 >
-                                    <HiDocumentText className="me-2"/>
+                                    <HiDocumentText className="me-2" />
                                     Post
                                 </Nav.Link>
                             </Nav.Item>
@@ -83,9 +98,9 @@ const DashSidebar = ({ onTabChange }) => {
                                         active={tab === 'users'}
                                         onClick={() => handleTabClick('users')}
                                         className={`d-flex align-items-center justify-content-center justify-content-md-start ${tab === 'users' ? 'text-primary' : 'text-secondary'}`}
-                                        style={{cursor: 'pointer'}}
+                                        style={{ cursor: 'pointer' }}
                                     >
-                                        <HiOutlineUserGroup className="me-2"/>
+                                        <HiOutlineUserGroup className="me-2" />
                                         Utenti iscritti
                                     </Nav.Link>
                                 </Nav.Item>
@@ -95,9 +110,9 @@ const DashSidebar = ({ onTabChange }) => {
                                         active={tab === 'comments'}
                                         onClick={() => handleTabClick('comments')}
                                         className={`d-flex align-items-center justify-content-center justify-content-md-start ${tab === 'comments' ? 'text-primary' : 'text-secondary'}`}
-                                        style={{cursor: 'pointer'}}
+                                        style={{ cursor: 'pointer' }}
                                     >
-                                        <HiAnnotation className="me-2"/>
+                                        <HiAnnotation className="me-2" />
                                         Commenti
                                     </Nav.Link>
                                 </Nav.Item>
@@ -108,9 +123,9 @@ const DashSidebar = ({ onTabChange }) => {
                             <Nav.Link
                                 onClick={handleSignOut}
                                 className="d-flex align-items-center justify-content-center justify-content-md-start text-secondary text-danger"
-                                style={{cursor: 'pointer'}}
+                                style={{ cursor: 'pointer' }}
                             >
-                                <HiArrowSmRight className="me-2"/>
+                                <HiArrowSmRight className="me-2" />
                                 Logout
                             </Nav.Link>
                         </Nav.Item>

@@ -5,6 +5,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import Comment from './Comment';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
+/**
+ * @Module CommentSection
+ */
+/**
+
+/**
+ * Componente CommentSection per gestire e visualizzare i commenti di un post.
+ *
+ * @param {Object} props - L'oggetto delle proprietà.
+ * @param {string} props.postId - L'ID del post.
+ * @returns {JSX.Element} Il componente JSX della sezione commenti.
+ */
 export default function CommentSection({ postId }) {
   const { currentUser } = useUser();
   const [comment, setComment] = useState('');
@@ -14,6 +26,11 @@ export default function CommentSection({ postId }) {
   const [commentToDelete, setCommentToDelete] = useState(null);
   const navigate = useNavigate();
 
+  /**
+   * Gestisce l'invio di un nuovo commento.
+   *
+   * @param {Object} e - L'evento del form.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (comment.length > 200) {
@@ -57,6 +74,11 @@ export default function CommentSection({ postId }) {
     getComments();
   }, [postId]);
 
+  /**
+   * Gestisce il "mi piace" di un commento.
+   *
+   * @param {string} commentId - L'ID del commento.
+   */
   const handleLike = async (commentId) => {
     try {
       if (!currentUser) {
@@ -85,6 +107,12 @@ export default function CommentSection({ postId }) {
     }
   };
 
+  /**
+   * Gestisce la modifica di un commento.
+   *
+   * @param {Object} comment - L'oggetto del commento.
+   * @param {string} editedContent - Il contenuto modificato del commento.
+   */
   const handleEdit = async (comment, editedContent) => {
     setComments(
         comments.map((c) =>
@@ -93,6 +121,11 @@ export default function CommentSection({ postId }) {
     );
   };
 
+  /**
+   * Gestisce l'eliminazione di un commento.
+   *
+   * @param {string} commentId - L'ID del commento.
+   */
   const handleDelete = async (commentId) => {
     setShowModal(false);
     try {
@@ -207,4 +240,3 @@ export default function CommentSection({ postId }) {
       </div>
   );
 }
-

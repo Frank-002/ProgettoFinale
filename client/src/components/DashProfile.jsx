@@ -13,8 +13,23 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase";
 
+/**
+ * Componente DashProfile per la gestione del profilo utente.
+ *
+ * @returns {JSX.Element} Il componente JSX per la gestione del profilo.
+ */
 const DashProfile = () => {
-  const { currentUser, loading, updateStart, updateSuccess, updateFailure, deleteStart, deleteSuccess, deleteFailure, signOutSuccess } = useUser(); // Usa il contesto utente
+  const {
+    currentUser,
+    loading,
+    updateStart,
+    updateSuccess,
+    updateFailure,
+    deleteStart,
+    deleteSuccess,
+    deleteFailure,
+    signOutSuccess
+  } = useUser(); // Usa il contesto utente
   const filePickerRef = useRef();
 
   const [imageFile, setImageFile] = useState(null);
@@ -28,6 +43,11 @@ const DashProfile = () => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
+  /**
+   * Gestisce il cambiamento dell'immagine di profilo.
+   *
+   * @param {Object} e - L'evento del cambiamento dell'input file.
+   */
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -42,6 +62,9 @@ const DashProfile = () => {
     }
   }, [imageFile]);
 
+  /**
+   * Carica l'immagine di profilo su Firebase Storage.
+   */
   const uploadImage = async () => {
     setImageFileUploading(true);
     setImageFileUploadError(null);
@@ -61,7 +84,7 @@ const DashProfile = () => {
       },
       (error) => {
         setImageFileUploadError(
-          "Could not upload image (File must be less than 2MB)"
+          "Non è stato possibile caricare l'immagine (Il file deve essere inferiore a 2MB)"
         );
         setImageFile(null);
         setImageFileUrl(null);
@@ -79,10 +102,20 @@ const DashProfile = () => {
     );
   };
 
+  /**
+   * Gestisce il cambiamento degli input del form.
+   *
+   * @param {Object} e - L'evento del cambiamento dell'input.
+   */
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
+  /**
+   * Gestisce l'invio del form per l'aggiornamento del profilo utente.
+   *
+   * @param {Object} e - L'evento dell'invio del form.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -125,6 +158,9 @@ const DashProfile = () => {
     }
   };
 
+  /**
+   * Gestisce l'eliminazione dell'account utente.
+   */
   const handleDeleteUser = async () => {
     setShowModal(false);
     try {
@@ -145,6 +181,9 @@ const DashProfile = () => {
     }
   };
 
+  /**
+   * Gestisce il logout dell'utente.
+   */
   const handleSignOut = async () => {
     try {
       const res = await fetch(`/api/user/signout`, {

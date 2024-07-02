@@ -4,7 +4,27 @@ import { FaThumbsUp } from 'react-icons/fa';
 import { Button, Form } from 'react-bootstrap';
 import { useUser } from './UserContext';
 
+/**
+ * @Module Comment
+ */
+/**
 
+/**
+ * Componente Comment per visualizzare un singolo commento con funzionalità per mettere "mi piace", modificare e cancellare.
+ *
+ * @param {Object} props - L'oggetto delle proprietà.
+ * @param {Object} props.comment - L'oggetto del commento.
+ * @param {string} props.comment._id - L'ID univoco del commento.
+ * @param {string} props.comment.content - Il contenuto del commento.
+ * @param {string} props.comment.userId - L'ID dell'utente che ha scritto il commento.
+ * @param {string} props.comment.createdAt - La data di creazione del commento.
+ * @param {number} props.comment.numberOfLikes - Il numero di "mi piace" ricevuti dal commento.
+ * @param {Array} props.comment.likes - L'array degli ID degli utenti che hanno messo "mi piace".
+ * @param {Function} props.onLike - Funzione chiamata quando si mette "mi piace" al commento.
+ * @param {Function} props.onEdit - Funzione chiamata quando si modifica il commento.
+ * @param {Function} props.onDelete - Funzione chiamata quando si elimina il commento.
+ * @returns {JSX.Element} Il componente JSX del commento.
+ */
 export default function Comment({ comment, onLike, onEdit, onDelete }) {
   const [user, setUser] = useState({});
   const [isEditing, setIsEditing] = useState(false);
@@ -142,4 +162,3 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
       </div>
   );
 }
-
